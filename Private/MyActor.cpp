@@ -11,13 +11,13 @@ AMyActor::AMyActor()
 
 }
 
-int32 step() {
+static int32 Step() {
 	int32 stepSize = FMath::RandRange(0, 1);
 
 	return stepSize;
 }
 
-float distance(FVector2D first, FVector2D second) {
+static float Distance(FVector2D first, FVector2D second) {
 	float dx = first.X - second.X;
 	float dy = first.Y - second.Y;
 	return FMath::Sqrt(dx * dx + dy * dy);
@@ -50,13 +50,13 @@ void AMyActor::BeginPlay()
 	for (int32 i = 0; i < 10; i++) {
 		FVector2D TempPos = Pos;
 
-		Pos.X += step();
-		Pos.Y += step();
+		Pos.X += Step();
+		Pos.Y += Step();
 
-		float Distance = distance(TempPos, Pos);
-		TotalMoveDistance += Distance;
+		float DistancePoint = Distance(TempPos, Pos);
+		TotalMoveDistance += DistancePoint;
 
-		UE_LOG(LogTemp, Log, TEXT("The Present Position : (%.0f, %.0f), Distance : %.3f"), Pos.X, Pos.Y, Distance);
+		UE_LOG(LogTemp, Log, TEXT("The Present Position : (%.0f, %.0f), Distance : %.3f"), Pos.X, Pos.Y, DistancePoint);
 		EventCount += TriggerEventWithProbability(50);
 	}
 	UE_LOG(LogTemp, Log, TEXT("Total Move Distance : %.3f, EventCount : %d"), TotalMoveDistance, EventCount);
